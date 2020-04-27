@@ -1,0 +1,13 @@
+{
+  "name": "wgds",
+  "version": "0.23",
+  "description": "Wem gehoert die Schweiz",
+  "main": "index.js",
+  "author": "Michi",
+  "private": true,
+  "license": "private",
+  "dependencies": {
+    "express": "3.4.8",
+    "socket.io": "1.0"
+  }
+}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WGDS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" media="screen and (max-width: 500px)" href="mobile.css">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+</head>
+<body>
+  <ul class="pages">
+    <li class="lobby page">
+      <div class="gameArea snap">
+        <h2>Spiele</h2>
+        <ul class="games"></ul>
+        <div class="dlg_newgame" title="Neues Spiel"><label>Spielname: <input class="gamename" type="text"/></label></div>
+      </div>
+      <div class="playerArea">
+        <h2>Spieler</h2>
+        <ul class="players"></ul>
+      </div>
+      <div class="chatArea snap">
+        <h2>Nachrichten</h2>
+        <ul class="messages"></ul>
+        <input class="inputMessage" placeholder="Nachricht senden..."/>
+      </div>
+    </li>
+    <li class="login page">
+      <h1>Wem gehört die Schweiz?</h1>
+      <p class="subtitle">Betaversion. Skype: <a href="skype:michihostettler?chat">Michi</a> / <a href="skype:cosmiceidex?chat">Urs</a></p>
+      <div class="form">
+        <h3>Spielername:</h3>
+        <input class="usernameInput" type="text" maxlength="14" />
+      </div>
+    </li>
+    <li class="game page">
+      <div class="dlg_corp" title="Firmenname">
+        <fieldset class="corpstatus"><legend>Firmenstatus</legend>
+        <ul>
+          <li class="total">Aktien gesamt: <span></span></li>
+          <li class="available">Aktien verfügbar: <span></span></li>
+          <li class="president">Präsident: <span></span></li>
+        </ul>
+        </fieldset>
+        <fieldset class="corpinvestors"><legend>Investoren</legend>
+        <ul>
+        </ul>
+        </fieldset>
+        <ul class="corpactions">
+          <li class="corpaction_add">Aktien hinzufügen</li>
+          <li class="corpaction_rem">Aktien entfernen</li>
+          <li class="corpaction_elect">Präsidentschaftswahlen</li>
+          <li class="corpaction_leave">Firma verlassen</li>
+        </ul>
+      </div>
+      <div class="dlg_corp_sharemanager" title="Firmenname">
+        <fieldset class="depot"><legend>Depot</legend>
+        <ul>
+        </ul>
+        </fieldset>
+        <input type="number" class="moveamount" value="0" min="0" max="0">
+        <button class="domove">...</button>
+        <fieldset class="corpinvestors"><legend>Investoren</legend>
+        <ul>
+        </ul>
+        </fieldset>
+      </div>
+      <div class="dlg_election" title="Wahlen">
+        <h2 class="corp">Firma</h2>
+        <fieldset class="players"><legend>Kandidaten</legend>
+        <ul>
+        </ul>
+        </fieldset>
+        <fieldset class="investors"><legend>Investoren</legend>
+        <ul>
+        </ul>
+        </fieldset>
+        <ul class="electstatus">
+          <li class="votes">Stimmen: <span></span></li>
+          <li class="time">Restzeit: <span></span></li>
+        </ul>
+        <fieldset class="upcoming"><legend>Geplante Wahlen</legend>
+        <ul>
+        </ul>
+        </fieldset>
+      </div>
+      <div class="corpArea snap">
+        <h2>Firmen</h2>
+        <ul class="corps"></ul>
+      </div>
+      <div class="playerArea snap">
+        <h2>Spieler</h2>
+        <ul class="players"></ul>
+      </div>
+      <div class="statusArea">
+        <div class="init">Das Spiel wurde noch nicht gestartet. Weitere Mitspieler können dem Spiel beitreten. <input type="button" class="startgame" value="Spiel starten!"></div>
+        <div class="endgame">Spielende. <strong></strong> <input type="button" class="quitgame" value="Spiel verlassen"></div>
+      	<p class="turn">Runde <span></span></p>
+      	<p class="actions">Aktionen: <span></span></p>
+      	<p class="time">Zeit: <span></span></p>
+      </div>
+      <div class="depotArea snap">
+        <h2>Aktiendepot</h2>
+        <dl class="depot"></dl>
+        <input class="resetPersonal" type="button" value="Persönliche Aktien zurücksetzen" />
+      </div>
+      <div class="chatArea snap">
+        <h2>Nachrichten</h2>
+        <ul class="messages"></ul>
+        <input class="inputMessage" placeholder="Nachricht senden..."/>
+      </div>
+    </li>
+
+  </ul>
+  <div class="errormessage" title="Fehler"></div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+  <script src="jquery.panelSnap.js"></script>
+<script>
+$('body').panelSnap({slideSpeed:100, $menu: false, namespace: '.panelSnap', panelSelector:'.snap:visible'});
+</script>
+
+</body>
+</html>

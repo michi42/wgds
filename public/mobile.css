@@ -1,0 +1,107 @@
+body, html, input {
+	-webkit-text-size-adjust:none;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.login.page .form .usernameInput {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.lobby {
+	width: 200%;
+}
+.lobby > div {
+	width: 50%;
+}
+.ui-dialog {
+	position: fixed !important;
+	left: 0 !important;
+	right: 0 !important;
+	top: 0 !important;
+	bottom: 0 !important;
+	width: auto !important;
+	margin: 5px !important;
+}
+.ui-dialog-titlebar {
+	font-size: 120%;
+}
+.ui-dialog-content {
+	height: auto !important;
+	max-height: none !important;
+	font-size: 120%;
+}
+
+.ui-button {
+	padding: 10px !important;
+	height: auto !important;
+}
+.game {
+	width: 400%;
+}
+.game > div {
+	width: 25% !important;
+}
+.game .corpArea {
+	height: 95%;
+}
+.game .playerArea {
+	left: 25%;
+	height: 95%;
+}
+.game .statusArea {
+	left: 0;
+	position: fixed;
+	height: 5%;
+	bottom: 0;
+	width: auto !important;
+	left: 0;
+	right: 0;
+}
+.statusArea p {
+	margin: 3px;
+	display: inline-block;
+	width: 30%;
+}
+.game .corpArea .corps li, .game .playerArea .players li {
+	margin: 4px;
+	padding: 4px;
+}
+.game .depotArea {
+	left: 50%;
+	height: 95%;
+}
+.game .chatArea {
+	left: 75%;
+	height: 95%;
+}
+
+.dlg_corp > * {
+	position: static !important;
+}
+.dlg_corp .corpinvestors {
+	height: 40vh;
+	overflow: auto;
+}
+.dlg_corp_sharemanager {
+	text-align: center;
+}
+.dlg_corp_sharemanager > * {
+	position: static !important;
+	margin-top: 0 !important;
+}
+
+.dlg_corp_sharemanager .depot, .dlg_corp_sharemanager .corpinvestors {
+	height: 30vh;
+}
+
+.game.pregame .statusArea .startgame, .game.aftergame .statusArea .quitgame {
+	height: auto;
+	margin: 0;
+	width: 100%;
+	top: 0;
+}
+
+.dlg_election > * {
+	position: static !important;
+}

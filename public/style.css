@@ -1,0 +1,602 @@
+* {
+  box-sizing: border-box;
+  cursor: default;
+}
+
+html, input {
+  font-family: sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  word-wrap: break-word;
+}
+
+h2 {
+  border-bottom: 2px solid black;
+  background: #dedede;
+  padding: 5px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.chatArea .messages {
+  height: 96%;
+  margin: 0;
+  overflow-y: scroll;
+  padding: 10px 20px 10px 20px;
+}
+.chatArea .message {
+  clear: both;
+}
+.chatArea .username {
+  float: left;
+  font-weight: 700;
+  overflow: hidden;
+  padding-right: 15px;
+  text-align: right;
+}
+.chatArea .status {
+  color: #999;
+  font-weight: bold;
+}
+.chatArea .gamestatus {
+  color: blue;
+  font-weight: bold;
+}
+.chatArea .local {
+  font-style: italic;
+}
+/* Pages */
+.pages {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.page {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.page {
+  display: none;
+}
+.page.active {
+  display: block;
+}
+html .ui-widget {
+  font: inherit;
+}
+
+
+/* Login Page */
+.login.page {
+  background-color: #eee;
+}
+.login.page h3, .login.page .usernameInput {
+  font-size: 200%;
+  color: #000;
+  font-weight: 100;
+}
+.login.page h1 {
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 300%;
+}
+.login.page .subtitle {
+  text-align: center;
+  margin-top: 0;
+}
+.login.page .form {
+  height: 100px;
+  margin-top: -100px;
+  position: absolute;
+
+  text-align: center;
+  top: 50%;
+  width: 100%;
+}
+.login.page h3 {
+  margin-bottom: 8px;
+}
+.login.page .form .usernameInput {
+  background-color: #fff;
+  border: 2px solid #000;
+  outline: none;
+  padding: 5px;
+  text-align: center;
+  width: 400px;
+  letter-spacing: 3px;
+}
+
+
+/* Lobby */
+.lobby > div {
+  position: absolute;
+  border: 3px solid black;
+  width: 50%;
+}
+.lobby .chatArea {
+  height: 100%;
+  padding-bottom: 60px;
+  right: 0;
+}
+.lobby .playerArea {
+  bottom: 0;
+  height: 30%;
+}
+.lobby .playerArea ul {
+  padding: 0;
+  margin: 0;
+}
+.lobby .playerArea li {
+  font-weight: bold;
+  float: left;
+  padding: 5px 20px;
+  text-indent: 0;
+}
+.lobby .gameArea .games li .name {
+  font-weight: bold;
+  margin: 0;
+}
+.lobby .gameArea .games li .state {
+  margin: 0;
+  font-size: 80%;
+  color: #999;
+  float: left;
+}
+.lobby .gameArea .games li .playercount {
+  font-weight: bold;
+  margin: 0;
+  font-size: 80%;
+  float: right;
+}
+.lobby .gameArea {
+  top: 0;
+  height: 70%;
+}
+.lobby .gameArea .games {
+  margin: 0;
+  padding: 0;
+}
+.lobby .gameArea .games li {
+  overflow: hidden;
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+.lobby .gameArea .games li:hover {
+  background: #eee;
+}
+.lobby .gameArea .games li.newgame {
+  color: #888;
+  text-align: center;
+}
+
+.lobby .chatArea .inputMessage {
+  border: 0;
+  border-top: 2px solid #000;
+  bottom: 0;
+  height: 40px;
+  left: 0;
+  outline: none;
+  padding-left: 10px;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  font-size: 120%;
+}
+
+.game > div {
+  overflow: auto;
+}
+.game .chatArea .messages {
+  position: absolute;
+  height: auto;
+  top: 32px;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+}
+.game .corpArea {
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  border: 1px solid black;
+}
+.game .corpArea .corps, .game .playerArea .players {
+  margin: 0;
+  padding: 0;
+}
+
+.game .corpArea .corps li, .game .playerArea .players li, .game .resetPersonal {
+  border: 1px outset #ddd;
+  background: #eee;
+  padding: 3px;
+  margin: 3px;
+  text-align: center;
+  font: inherit;
+  outline: 0;
+  color: #333;
+}
+.game .corpArea .corps li:hover, .game .playerArea .players li:hover, .game .resetPersonal:hover {
+  border-color: black;
+  color: black;
+  cursor: pointer;
+}
+.game .corpArea .corps li.ch {
+  margin: 10px;
+  border-color: red;
+  background: red;
+  color: white;
+}
+.game h2 {
+  font-size: 110%;
+}
+.game .depotArea {
+  position: absolute;
+  left: 40%;
+  width: 20%;
+  height: 100%;
+  border: 1px solid black;
+}
+.game .depotArea .depot {
+  padding: 2px 8px;
+}
+.game .depotArea .depot dt {
+  clear: both;
+  float: left;
+  margin: 2px 0;
+}
+.game .depotArea .depot dd {
+  float: right;
+  margin-right: 5px;
+}
+.game .depotArea .depot .total {
+  font-weight: bold;
+}
+.game .depotArea .resetPersonal{
+  position: absolute;
+  bottom: 0;
+  width: 96%;
+  margin: 5px 2%;
+  left: 0;
+}
+.game .statusArea .init,
+.game .statusArea .endgame {
+  display: none;
+}
+.game.pregame .corpArea, .game.pregame .depotArea {
+  opacity: 0.3;
+}
+.game.pregame .statusArea p,
+.game.aftergame .statusArea p {
+  display: none;
+}
+.game.aftergame .statusArea .endgame,
+.game.pregame .statusArea .init {
+  display: block;
+}
+.game.pregame .statusArea .startgame,
+.game.aftergame .statusArea .quitgame {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 96%;
+  margin: 5px 2%;
+  height: 50px;
+  border: 1px outset #eee;
+  font: inherit;
+  background: #88FF88;
+  font-weight: bold;
+  outline: 0;
+  cursor: pointer;
+}
+
+.game .playerArea {
+  position: absolute;
+  left: 20%;
+  width: 20%;
+  height: 70%;
+  border: 1px solid black;
+}
+.game .statusArea {
+  position: absolute;
+  left: 20%;
+  width: 20%;
+  height: 30%;
+  border: 1px solid black;
+  bottom: 0;
+  padding: 5px;
+  text-align: center;
+}
+.game .statusArea .turn {
+  font-weight: bold;
+  font-size: 110%;
+}
+.game .chatArea {
+  position: absolute; 
+  width: 40%;
+  height: 100%;
+  border: 1px solid black; 
+  right: 0;
+}
+.game .chatArea input {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  border: none;
+  border-top: 1px solid #aaa;
+  margin: 0;
+  display: block;
+  width: 100%;
+  outline: 0;
+  font: inherit;
+  padding: 5px;
+}
+.dlg_corp {
+  width: auto !important;
+}
+.dlg_corp .corpstatus {
+  position: absolute;
+  right: 0;
+  left: 50%;
+  top: 0;
+  bottom: 145px;
+}
+.dlg_corp .corpstatus ul {
+  margin: 5px;
+  padding: 0;
+}
+.dlg_corp .corpstatus li {
+  margin: 5px;
+}
+.dlg_corp .corpinvestors {
+  position: absolute;
+  left: 0;
+  right: 50%;
+  top: 0;
+  bottom: 0;
+}
+.dlg_corp .corpactions {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  margin: 5px 3px;
+  padding: 0;
+  height: 140px;
+}
+.dlg_corp .corpactions li {
+  display: block;
+}
+.dlg_corp.ch .corpaction_rem, .dlg_corp.ch .corpaction_elect, .dlg_corp.ch .corpstatus {
+  display: none;
+}
+.dlg_corp.ch .corpactions {
+  height: 70px;
+}
+.dlg_corp.ch {
+  background: url(/ch.png) 90% 30% no-repeat !important;
+} 
+.dlg_corp .corpactions li, .ui-dialog button.ui-button, button,
+.dlg_corp_sharemanager .depot li, .dlg_corp_sharemanager .corpinvestors li,
+.dlg_corp .corpinvestors li, 
+.dlg_election .investors li, .dlg_election .upcoming li {
+  text-align: center;
+  border: 1px outset #eee;
+  background: #eee;
+  padding: 5px;
+  margin: 5px 0;
+  height: 30px;
+  border-radius: 0;
+}
+.ui-dialog  button.ui-button span {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.dlg_corp .corpactions li:hover, .ui-dialog button.ui-button:hover, button:hover {
+  border-color: black;
+  color: black;
+  cursor: pointer;
+}
+
+.aftergame .dlg_corp .corpaction_add,
+.aftergame .dlg_corp .corpaction_rem,
+.aftergame .dlg_corp .corpaction_elect {
+  visibility: hidden;
+}
+.aftergame .resetPersonal {
+  visibility: hidden;
+}
+
+.dlg_corp_sharemanager .depot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 60%;
+}
+.dlg_corp_sharemanager .depot ul,
+.dlg_corp_sharemanager .corpinvestors ul,
+.dlg_corp .corpinvestors ul {
+  margin: 0;
+  padding: 0 5px;
+  max-height: 95%;
+  overflow: auto;
+}
+.dlg_corp_sharemanager li.forbidden {
+  opacity: 0.5;
+}
+.dlg_corp_sharemanager .depot ul li,
+.dlg_corp_sharemanager .corpinvestors ul li,
+.dlg_corp .corpinvestors ul li,
+.dlg_election .investors ul li, .dlg_election .upcoming ul li {
+  height: auto;
+  padding: 2px;
+  font-size: 90%;
+}
+.dlg_corp_sharemanager ul li.active {
+  background: black !important;
+  border: 1px solid red;
+  color: white;
+}
+.dlg_corp_sharemanager ul li.new {
+  background: #fff;
+  border: 1px solid black;
+}
+.dlg_corp_sharemanager .corpinvestors {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 60%;
+}
+.dlg_corp_sharemanager .moveamount {
+  position: absolute;
+  left: 41%;
+  right: 60%;
+  width: 18%;
+  top: 50%;
+  margin-top: -40px;
+}
+.dlg_corp_sharemanager .domove {
+  position: absolute;
+  left: 41%;
+  right: 60%;
+  width: 18%;
+  top: 50%; 
+  margin-top: -5px;
+}
+
+.dlg_election h2.corp {
+  position: absolute;
+  left: 0;
+  right: 40%;
+  border: 0;
+  background: #eee;
+  border-radius: 5px;
+  height: 35px;
+  text-align: center;
+  border: 1px outset #eee;
+}
+.dlg_election .players {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  right: 70%;
+  bottom: 0;
+}
+.dlg_election .investors {
+  position: absolute;
+  top: 145px;
+  left: 30%;
+  right: 40%;
+  bottom: 0;
+}
+.dlg_election .electstatus {
+  font-weight: bold;
+  position: absolute;
+  top: 40px;
+  left: 31%;
+  border: 1px outset #eee;
+  background: #eee;
+  text-align: center;
+  right: 41%;
+  height: 80px;
+  padding: 20px;
+  border-radius: 5px;
+}
+.dlg_election .upcoming {
+  position: absolute;
+  top: 5px;
+  left: 63%;
+  bottom: 0;
+  right: 0;
+}
+.dlg_election .investors ul,
+.dlg_election .upcoming ul {
+  margin: 0;
+  padding: 0;
+}
+.dlg_election .upcoming ul li {
+  background: white;
+  border: 1px solid black;
+  padding: 3px;
+}
+.dlg_election .players ul {
+  margin: 0;
+  padding: 0;
+}
+.dlg_election .players ul li {
+  margin: 5px 0;
+  border: 1px outset #eee;
+  padding: 3px;
+}
+.dlg_election .players.enabled ul li:hover {
+  border: 2px solid black;
+  padding: 2px;
+}
+.dlg_election .players ul li .name {
+  font-weight: bold;
+}
+.dlg_election .players ul li .status {
+  font-size: 80%;
+  text-align: right;
+}
+.dlg_election .upcoming ul {
+  max-height: 98%;
+  overflow:auto;
+}
+.chatArea .electionresult {
+  border: 1px solid black;
+  margin: 10px 0;
+}
+.chatArea .electionresult h3 {
+  margin: 0;
+  border-bottom: 1px solid black;
+  padding: 10px;
+}
+.chatArea .electionresult ul {
+  padding: 5px;
+}
+.chatArea .electionresult ul li {
+  font-weight: bold;
+}
+.chatArea .electionresult ul li dl {
+  font-weight: normal;
+  margin: 0;
+  margin-left: 2em;
+}
+.chatArea .electionresult ul li dt {
+  float: left;
+  clear: both;
+}
+.chatArea .electionresult ul li dt:after {
+  content: ': ';
+}
+.chatArea .electionresult ul li dd {
+  margin-left: 10em;
+}
+.chatArea .electionresult > p {
+  margin: 0;
+  padding: 10px;
+  font-weight: bold;
+  border-top: 1px solid black;
+}
+.ui-dialog-titlebar-close {
+  display: none !important;
+}
