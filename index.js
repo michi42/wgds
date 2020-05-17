@@ -341,8 +341,6 @@ var WGDS = {
 }
 
 io.on('connection', function(socket) {
-	console.log('connection');
-
 	socket.on('chat message', function(message) {
 		console.log('Chat: <%s> %s',socket.username, message);
 		if(socket.gamename) {
@@ -558,8 +556,8 @@ io.on('connection', function(socket) {
 		io.to('_lobby').emit('lobby userlist', WGDS.listUsers());
 	});
 	socket.on('disconnect', function() {
-		console.log('disconnect of "%s"',socket.username);
 		if(socket.username) {
+			console.log('disconnect of "%s"',socket.username);
 			delete WGDS.users[socket.username];
 			io.to('_lobby').emit('lobby userlist', WGDS.listUsers());
 		}
