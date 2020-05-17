@@ -11,7 +11,7 @@ app.use(express.static(__dirname + '/public'));
 
 var WGDS = {
 	MAX_PLAYERS_PER_GAME: 8,
-	TIME_PER_TURN: 300,
+	TIME_PER_TURN: 120,
 	TIME_PER_ELECTION: 30,
 	TIME_PER_ELECTION_AFTER_VOTE: 5,
 
