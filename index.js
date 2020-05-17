@@ -252,8 +252,10 @@ var WGDS = {
 						}
 					}
 					game.elections.schedule[game.elections.current].result = curPres;
-					if(curPres !== null)
+					if(curPres !== null) {
 						game.corporations[game.elections.schedule[game.elections.current].corporation].president = curPres;
+						game.update('corporations');
+					}
 					game.emit('election results', game.elections.schedule[game.elections.current]);
 					game.elections.current++;
 					game.elections.time = WGDS.TIME_PER_ELECTION;
