@@ -1,6 +1,6 @@
 {
   "name": "wgds",
-  "version": "0.24",
+  "version": "0.0.24",
   "description": "Wem gehoert die Schweiz",
   "main": "index.js",
   "author": "Michi",
