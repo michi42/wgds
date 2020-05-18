@@ -106,7 +106,7 @@ var WGDS = {
 				// check if this is a 'special' end-of-game schedule turn
 				if(this.turn == -4) {
 					this.emit('status','Spielende, Wahlen von Amtes wegen.');
-					for(var i=this.corporations.length-1; i>=0; i--)
+					for(var i=0; i<this.corporations.length; i++)
 						if(!this.corporations[i].ch)
 							this.scheduleElection(i);
 
@@ -117,15 +117,7 @@ var WGDS = {
 					this.update();
 					return;
 				} else if(this.turn == -3) {
-					/* var corps = [];
 					for(var i=this.corporations.length-1; i>=0; i--)
-						if(!this.corporations[i].ch)
-							corps.push(i);
-					while(corps.length > 0) {
-						var idx = Math.floor(Math.random()*corps.length);
-						this.scheduleElection(corps.splice(idx,1)[0]);
-					} */
-					for(var i=0; i<this.corporations.length; i++)
 						if(!this.corporations[i].ch)
 							this.scheduleElection(i);
 
