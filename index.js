@@ -86,6 +86,10 @@ var WGDS = {
 			nextTurn: function() {
 				this.emit('closeall');
 				var game = this;
+				this.elections.schedule.forEach(function(item){	
+					if(item.result !== null)	
+						game.corporations[item.corporation].president = item.result;	
+				});
 				this.elections.schedule = [];
 				
 				// check if the game ends ...
@@ -244,10 +248,6 @@ var WGDS = {
 						}
 					}
 					game.elections.schedule[game.elections.current].result = curPres;
-					if(curPres !== null) {
-						game.corporations[game.elections.schedule[game.elections.current].corporation].president = curPres;
-						game.update('corporations');
-					}
 					game.emit('election results', game.elections.schedule[game.elections.current]);
 					game.elections.current++;
 					game.elections.time = WGDS.TIME_PER_ELECTION;
