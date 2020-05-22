@@ -263,10 +263,10 @@ var WGDS = {
 					return;
 				}
 				
+				var corp = game.corporations[game.elections.schedule[game.elections.current].corporation];
 				var afterVote = true;
 				for(var player in game.players) {
 					if(game.players[player].socket && game.elections.voters.indexOf(player) == -1) {
-						var corp = game.corporations[game.elections.schedule[game.elections.current].corporation];
 						for(var investor in corp.investors) {
 							if(investor == player && corp.investors[investor] > 0)
 								afterVote = false;
@@ -276,7 +276,12 @@ var WGDS = {
 						}
 					}
 				}
-				if(afterVote && game.elections.time > WGDS.TIME_PER_ELECTION_AFTER_VOTE)
+				if(!afterVote && corp.ch) {
+					// in the end vote (CH), everyone votes for themselves
+					for(var player in game.players)
+						game.vote(player,player);
+				}
+				if(afterVote && !corp.ch && game.elections.time > WGDS.TIME_PER_ELECTION_AFTER_VOTE)
 					game.elections.time = WGDS.TIME_PER_ELECTION_AFTER_VOTE;
 
 				setTimeout(game.tickElections,1000,game);
