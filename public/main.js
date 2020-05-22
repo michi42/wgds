@@ -481,7 +481,7 @@ $(function() {
 		}
 		$(this).addClass('active');
 		$('.domove,.moveamount',dlg_game_corp_sharemanager).css({opacity: 1});
-		$('.moveamount',dlg_game_corp_sharemanager).val($(this).data('amount'));
+		$('.moveamount',dlg_game_corp_sharemanager).val(maxSharesMoved);
 		$('.moveamount',dlg_game_corp_sharemanager).attr('max', maxSharesMoved);
 		$('.moveamount',dlg_game_corp_sharemanager).focus();
 	});
