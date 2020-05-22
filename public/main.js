@@ -419,13 +419,10 @@ $(function() {
 		game.corporations.forEach(function(corp,i) {
 			if(corp.president === myUsername && corp.sharesAvailable > 0) {
 				var $li = $('<li>');
-				var investedShares = investors['corp_'+i]||0;
 				$li.text(corp.name+' ('+corp.sharesAvailable+')')
 					.data('investor','corp_'+i).data('amount',corp.sharesAvailable)
-					.data('invested',investedShares);
+					.data('invested',investors['corp_'+i]||0);
 				if(i == dlg_game_corp.corporation)
-					$li.addClass('forbidden');
-				if(investedShares >= game.MAX_INVEST_PER_CORP)
 					$li.addClass('forbidden');
 				$li.data('player',myUsername);
 				$li.appendTo($('.depot ul',dlg_game_corp_sharemanager));
