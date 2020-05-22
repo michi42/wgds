@@ -407,7 +407,7 @@ $(function() {
 			addToChatGroup(player);
 			$(this).add('chat-group');
 		}
-	}
+	});
 	$('.game .resetPersonal').click(function(ev) {
 		if(game.players[myUsername].actions <= 0) return;
 		socket.emit('game resetpersonal');
