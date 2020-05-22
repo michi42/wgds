@@ -108,7 +108,7 @@ var WGDS = {
 					this.emit('status','Spielende, Wahlen von Amtes wegen.');
 					for(var i=0; i<this.corporations.length; i++)
 						if(!this.corporations[i].ch)
-							this.scheduleElection(i);
+							this.scheduleElection(i, true);
 
 					this.elections.current = 0;
 					this.elections.time = WGDS.TIME_PER_ELECTION;
@@ -119,7 +119,7 @@ var WGDS = {
 				} else if(this.turn == -3) {
 					for(var i=this.corporations.length-1; i>=0; i--)
 						if(!this.corporations[i].ch)
-							this.scheduleElection(i);
+							this.scheduleElection(i, true);
 
 					this.elections.current = 0;
 					this.elections.time = WGDS.TIME_PER_ELECTION;
@@ -130,7 +130,7 @@ var WGDS = {
 				} else if(this.turn == -2) {
 					for(var i=0; i<this.corporations.length; i++)
 						if(this.corporations[i].ch)
-							this.scheduleElection(i);
+							this.scheduleElection(i, true);
 
 					this.elections.current = 0;
 					this.elections.time = WGDS.TIME_PER_ELECTION;
@@ -182,13 +182,38 @@ var WGDS = {
 					this.nextTurn();
 				}
 			},
-			scheduleElection: function(corporation) {
+			scheduleElection: function(corporation, forceOrder=false) {
 				if(!this.corporations[corporation]) return;
-
-				this.elections.schedule.push({
-					'corporation': corporation,
-					'result': null,
-					votes: {}
+				if (forceOrder) {
+					this.elections.schedule.push({
+						'corporation': corporation,
+						'requests': 1,
+						'result': null,
+						votes: {}
+					});
+				}
+				// check if election in this corp is already scheduled
+				scheduledElection = -1;
+				for (var i in this.elections.schedule) {
+					if (this.elections.schedule[i].corporation == corporation) {
+						scheduledElection = i;
+						break;
+					}
+				}
+				if (scheduledElection == -1) {
+					this.elections.schedule.push({
+						'corporation': corporation,
+						'requests': 1,
+						'result': null,
+						votes: {}
+					});
+				} else {
+					this.elections.schedule[scheduledElection].requests++;
+				}
+				this.elections.schedule.sort(function(a,b) {
+					if (a.requests != b.requests)
+						return a.requests - b.requests;
+					return a.corporation - b.corporation;
 				});
 			},
 			vote: function(player,president) {
