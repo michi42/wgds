@@ -46,9 +46,9 @@ $(function() {
 	function removeFromChatGroup(player) {
 		if (privateChatGroup == null) {
 			privateChatGroup = [];
-			for (var player in game.players)
-				if (player != myUsername)
-					privateChatGroup.push(player);
+			for (var p in game.players)
+				if (p != myUsername)
+					privateChatGroup.push(p);
 		}
 		var playerIdx = privateChatGroup.indexOf(player);
 		if (playerIdx != -1)
