@@ -26,7 +26,7 @@ $(function() {
 	}
 	
 	function resetChatGroupIfBroadcast() {
-		if (!game) return;
+		if (!game || privateChatGroup == null) return;
 		var isBroadcast = true;
 		for (var player in game.players) {
 			if (player != myUsername && privateChatGroup.indexOf(player) == -1) {
@@ -34,9 +34,8 @@ $(function() {
 				break;
 			}
 		}
-		if (isBroadcast) {
+		if (isBroadcast)
 			privateChatGroup = null;
-		}
 	}
 	function addToChatGroup(player) {
 		privateChatGroup = privateChatGroup || [];
