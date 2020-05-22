@@ -366,11 +366,13 @@ var WGDS = {
 io.on('connection', function(socket) {
 	socket.on('chat message', function(chat) {
 		var message = chat.message
-		console.log('Chat: <%s> %s', socket.username, message);
+		console.log('Chat: <%s> %s ==> %s', socket.username, message, chat.to);
 		if(socket.gamename) {
-			if (chat.to) {
-				for (var user in chat.to) {
-					var player = WGDS.games[socket.gamename].players[user]
+			if (chat.to && chat.to.length > 0) {
+				var recipients = new Set(chat.to);
+				recipients.add(socket.username);
+				for (var user of recipients) {
+					var player = WGDS.games[socket.gamename].players[user];
 					if (!player) continue;
 					io.to(player.socket).emit('chat message', {
 						username: socket.username,
