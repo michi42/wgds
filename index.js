@@ -213,7 +213,7 @@ var WGDS = {
 				}
 				this.elections.schedule.sort(function(a,b) {
 					if (a.requests != b.requests)
-						return a.requests - b.requests;
+						return b.requests - a.requests;
 					return b.corporation - a.corporation;
 				});
 			},
