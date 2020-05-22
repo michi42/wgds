@@ -328,7 +328,9 @@ $(function() {
 					css.background = game.players[item.result].color;
 				if(game.elections.current == idx)
 					css.fontWeight = 'bold';
-				$('<li>').text(game.corporations[item.corporation].name).css(css).appendTo($('.upcoming ul',dlg_game_elect));
+				var requestCntText = item.requests > 1 ? ' ('+item.requests+')' : '';
+				$('<li>').text(game.corporations[item.corporation].name+requestCntText).css(css)
+					 .appendTo($('.upcoming ul',dlg_game_elect));
 			});
 			
 			$('.players ul',dlg_game_elect).empty();
