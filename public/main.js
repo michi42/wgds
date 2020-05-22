@@ -265,12 +265,12 @@ $(function() {
 		$.extend(game,newstate);
 		$('.game .players').empty();
 		for(var player in game.players) {
-			var isInChatGroup = privateChatGroup && (privateChatGroup.indexOf(player) >= 0 || player == myUsername);
-			$('<li>').text(player+' ('+game.players[player].sharesAvailable+'/'+game.players[player].shares+')')
+			var $player = $('<li>').text(player+' ('+game.players[player].sharesAvailable+'/'+game.players[player].shares+')')
 				.css({'background': game.players[player].color})
-				.data('player', player)
-				.addClass(isInChatGroup ? 'enabled' : 'disabled')
-				.appendTo($('.game .players'));
+				.data('player', player);
+			if (player == myUsername || !privateChatGroup || privateChatGroup.indexOf(player) >= 0)
+				$player.addClass('chat-group');
+			$player.appendTo($('.game .players'));
 		}
 
 		$('.game .corps').empty();
@@ -405,7 +405,7 @@ $(function() {
 			$(this).removeClass('chat-group');
 		} else {
 			addToChatGroup(player);
-			$(this).add('chat-group');
+			$(this).addClass('chat-group');
 		}
 	});
 	$('.game .resetPersonal').click(function(ev) {
