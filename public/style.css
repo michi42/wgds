@@ -227,11 +227,15 @@ html .ui-widget {
   outline: 0;
   color: #333;
 }
+.game .playerArea .players li:not(.chat-group) {
+  opacity: 0.3;
+}
 .game .corpArea .corps li:hover, .game .playerArea .players li:hover, .game .resetPersonal:hover {
   border-color: black;
   color: black;
   cursor: pointer;
 }
+
 .game .corpArea .corps li.ch {
   margin: 10px;
   border-color: red;
