@@ -264,6 +264,7 @@ $(function() {
 		if(game == null) game = newstate;
 		$.extend(game,newstate);
 		$('.game .players').empty();
+		resetChatGroupIfBroadcast();
 		for(var player in game.players) {
 			var $player = $('<li>').text(player+' ('+game.players[player].sharesAvailable+'/'+game.players[player].shares+')')
 				.css({'background': game.players[player].color})
