@@ -5,6 +5,8 @@ $(function() {
 	var $window = $(window);
 	switchPage('login'); $('.usernameInput').focus();
 	var game = null;
+	var activePage = 'login';
+	var privateChatGroup = null;
 
 	var socket = io();
 	var $error = $('.errormessage').dialog({
@@ -19,7 +21,37 @@ $(function() {
 		$('.pages .page').removeClass('active');
 		$('.pages .page.'+newPage).addClass('active');
 		$('.page.active .messages').empty();
+		activePage = newPage;
+		privateChatGroup = null;
 	}
+	
+	function resetChatGroupIfBroadcast() {
+		if (!game) return;
+		var isBroadcast = true;
+		for (var player in game.players) {
+			if (player != myUsername && privateChatGroup.indexOf(player) == -1) {
+				isBroadcast = false;
+				break;
+			}
+		}
+		if (isBroadcast) {
+			privateChatGroup = null;
+		}
+	}
+	function addToChatGroup(player) {
+		privateChatGroup = privateChatGroup || [];
+		if (privateChatGroup.indexOf(player) == -1)
+			privateChatGroup.push(player)
+		resetChatGroupIfBroadcast();
+	}
+	function removeFromChatGroup(player) {
+		privateChatGroup = privateChatGroup || [];
+		var playerIdx = privateChatGroup.indexOf(player);
+		if (playerIdx != -1)
+			privateChatGroup.splice(playerIdx,1)
+		resetChatGroupIfBroadcast();
+	}
+
 
 	function addChatMessage(data) {
 		var $usernameDiv = $('<span class="username"/>').text(data.username);
@@ -50,7 +82,7 @@ $(function() {
 				$(this).val('');
 				socket.emit('chat message', {
 					'message': message,
-					'to': null
+					'to': privateChatGroup || null
 				});
 			}
 		}
@@ -178,6 +210,7 @@ $(function() {
 		addMessage($('<li class="status">').text('Spieler \''+player+'\' hat das Spiel betreten.'));
 	});
 	socket.on('game playerquit', function(player) {
+		removeFromChatGroup(player);
 		addMessage($('<li class="status">').text('Spieler \''+player+'\' hat das Spiel verlassen.'));
 	});
 	socket.on('game status', function(status) {
@@ -232,8 +265,12 @@ $(function() {
 		$.extend(game,newstate);
 		$('.game .players').empty();
 		for(var player in game.players) {
+			var isInChatGroup = privateChatGroup && (privateChatGroup.indexOf(player) >= 0 || player == myUsername);
 			$('<li>').text(player+' ('+game.players[player].sharesAvailable+'/'+game.players[player].shares+')')
-				.css({'background': game.players[player].color}).appendTo($('.game .players'));
+				.css({'background': game.players[player].color})
+				.data('player', player)
+				.addClass(isInChatGroup ? 'enabled' : 'disabled')
+				.appendTo($('.game .players'));
 		}
 
 		$('.game .corps').empty();
@@ -360,6 +397,17 @@ $(function() {
 	$('.game .quitgame').click(function(ev) {
 		socket.emit('game quit');
 	});
+	$('.game .players').on('click','li',function(ev) {
+		var player = $(this).data('player');
+		if (player == myUsername) return;
+		if ($(this).hasClass('chat-group')) {
+			removeFromChatGroup(player);
+			$(this).removeClass('chat-group');
+		} else {
+			addToChatGroup(player);
+			$(this).add('chat-group');
+		}
+	}
 	$('.game .resetPersonal').click(function(ev) {
 		if(game.players[myUsername].actions <= 0) return;
 		socket.emit('game resetpersonal');
