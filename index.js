@@ -191,6 +191,7 @@ var WGDS = {
 						'result': null,
 						votes: {}
 					});
+					return;
 				}
 				// check if election in this corp is already scheduled
 				scheduledElection = -1;
@@ -213,7 +214,7 @@ var WGDS = {
 				this.elections.schedule.sort(function(a,b) {
 					if (a.requests != b.requests)
 						return a.requests - b.requests;
-					return a.corporation - b.corporation;
+					return b.corporation - a.corporation;
 				});
 			},
 			vote: function(player,president) {
