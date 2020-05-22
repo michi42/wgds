@@ -194,7 +194,7 @@ var WGDS = {
 					return;
 				}
 				// check if election in this corp is already scheduled
-				scheduledElection = -1;
+				var scheduledElection = -1;
 				for (var i in this.elections.schedule) {
 					if (this.elections.schedule[i].corporation == corporation) {
 						scheduledElection = i;
@@ -364,13 +364,25 @@ var WGDS = {
 }
 
 io.on('connection', function(socket) {
-	socket.on('chat message', function(message) {
-		console.log('Chat: <%s> %s',socket.username, message);
+	socket.on('chat message', function(chat) {
+		var message = chat.message
+		console.log('Chat: <%s> %s', socket.username, message);
 		if(socket.gamename) {
-			io.to('game_'+socket.gamename).emit('chat message', {
-				username: socket.username,
-				message: message
-			});
+			if (chat.to) {
+				for (var user in chat.to) {
+					var player = WGDS.games[socket.gamename].players[user]
+					if (!player) continue;
+					io.to(player.socket).emit('chat message', {
+						username: socket.username,
+						message: message
+					});
+				}
+			} else {
+				io.to('game_'+socket.gamename).emit('chat message', {
+					username: socket.username,
+					message: message
+				});
+			}
 			if(message.indexOf('/cheat') == 0) {
 				WGDS.games[socket.gamename].emit('status', '/cheat-Befehl von '+socket.username+'!');
 				var tokens = message.split(' ');
