@@ -23,8 +23,6 @@ var WGDS = {
 	
 	SHARES_PER_PLAYER: 5,
 	
-	MAX_INVEST_PER_CORP: 9,
-	
 	PLAYER_COLORS: [ '#FF8080', '#FFFF56', '#8AC4FF', '#56FF56', '#FFC5E8',
 	                 '#65FFFF', '#FFB163', '#8BE6A0', '#CECECE', '#DC9EFF' ],
 
@@ -34,7 +32,6 @@ var WGDS = {
 				return false;
 
 		return {
-			MAX_INVEST_PER_CORP: WGDS.MAX_INVEST_PER_CORP,
 			corporations : [
 				{ name: 'Schweiz', ch: true, shares: 42, sharesAvailable: 42, investors: {}, president: null },
 
