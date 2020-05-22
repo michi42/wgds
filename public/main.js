@@ -38,13 +38,18 @@ $(function() {
 			privateChatGroup = null;
 	}
 	function addToChatGroup(player) {
-		privateChatGroup = privateChatGroup || [];
+		if (privateChatGroup == null) return;
 		if (privateChatGroup.indexOf(player) == -1)
 			privateChatGroup.push(player)
 		resetChatGroupIfBroadcast();
 	}
 	function removeFromChatGroup(player) {
-		privateChatGroup = privateChatGroup || [];
+		if (privateChatGroup == null) {
+			privateChatGroup = [];
+			for (var player in game.players)
+				if (player != myUsername)
+					privateChatGroup.push(player);
+		}
 		var playerIdx = privateChatGroup.indexOf(player);
 		if (playerIdx != -1)
 			privateChatGroup.splice(playerIdx,1)
