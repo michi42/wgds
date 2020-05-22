@@ -48,7 +48,10 @@ $(function() {
 			var message = $(this).val();
 			if(message) {
 				$(this).val('');
-				socket.emit('chat message', message);
+				socket.emit('chat message', {
+					'message': message,
+					'to': null
+				});
 			}
 		}
 	});
