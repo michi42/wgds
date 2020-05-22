@@ -368,7 +368,7 @@ io.on('connection', function(socket) {
 		var message = chat.message
 		console.log('Chat: <%s> %s ==> %s', socket.username, message, chat.to);
 		if(socket.gamename) {
-			if (chat.to && chat.to.length > 0) {
+			if (Array.isArray(chat.to)) {
 				var recipients = new Set(chat.to);
 				recipients.add(socket.username);
 				for (var user of recipients) {
