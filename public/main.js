@@ -405,20 +405,23 @@ $(function() {
 			$('.domove',dlg_game_corp_sharemanager).text('<<<');
 		}
 
+		var investors = game.corporations[dlg_game_corp.corporation].investors;
+
 		// build depot
 		$('.depot ul',dlg_game_corp_sharemanager).empty();
 		
 		if(game.players[myUsername].sharesAvailable > 0) {
 			$('<li>').text('Persönlich ('+game.players[myUsername].sharesAvailable+')')
 				.data('investor',myUsername).data('amount',game.players[myUsername].sharesAvailable)
-				.data('player', myUsername)
+				.data('player', myUsername).data('invested',investors[myUsername]||0)
 				.appendTo($('.depot ul',dlg_game_corp_sharemanager));
 		}
 		game.corporations.forEach(function(corp,i) {
 			if(corp.president === myUsername && corp.sharesAvailable > 0) {
 				var $li = $('<li>');
 				$li.text(corp.name+' ('+corp.sharesAvailable+')')
-					.data('investor','corp_'+i).data('amount',corp.sharesAvailable);
+					.data('investor','corp_'+i).data('amount',corp.sharesAvailable)
+					.data('invested',investors['corp_'+i]||0);
 				if(i == dlg_game_corp.corporation)
 					$li.addClass('forbidden');
 				$li.data('player',myUsername);
@@ -428,7 +431,6 @@ $(function() {
 		
 		// build investors
 		$('.corpinvestors ul',dlg_game_corp_sharemanager).empty();
-		var investors = game.corporations[dlg_game_corp.corporation].investors;
 		for(var investor in investors) {
 			if(investor.match(/^corp_(\d+)$/)) {
 				var corp = game.corporations[RegExp.$1];
@@ -468,8 +470,10 @@ $(function() {
 	$('.dlg_corp_sharemanager .depot ul,.dlg_corp_sharemanager .corpinvestors ul').on('click','li',function(){
 		if($(this).data('player') != myUsername) return;
 		if($(this).hasClass('forbidden')) return;
+		var maxSharesMoved = $(this).data('amount');
 		if(dlg_game_corp_sharemanager.managerType == 'add') {
 			if($(this).parents('.depot').length == 0) return;
+			maxSharesMoved = Math.min($(this).data('amount'), game.MAX_INVEST_PER_CORP-$(this).data('invested'));
 			$('.dlg_corp_sharemanager .depot ul li').removeClass('active');
 		} else {
 			if($(this).parents('.corpinvestors').length == 0) return;
@@ -478,7 +482,7 @@ $(function() {
 		$(this).addClass('active');
 		$('.domove,.moveamount',dlg_game_corp_sharemanager).css({opacity: 1});
 		$('.moveamount',dlg_game_corp_sharemanager).val($(this).data('amount'));
-		$('.moveamount',dlg_game_corp_sharemanager).attr('max',$(this).data('amount'));
+		$('.moveamount',dlg_game_corp_sharemanager).attr('max', maxSharesMoved);
 		$('.moveamount',dlg_game_corp_sharemanager).focus();
 	});
 	$('.dlg_corp_sharemanager .moveamount').keydown(function(ev) {
@@ -486,14 +490,18 @@ $(function() {
 			$('.dlg_corp_sharemanager .domove').click();
 	});
 	$('.dlg_corp_sharemanager .domove').click(function() {
+		var maxSharesMoved;
 		var $src;
-		if(dlg_game_corp_sharemanager.managerType == 'add')
+		if(dlg_game_corp_sharemanager.managerType == 'add') {
 			$src = $('.dlg_corp_sharemanager .depot ul li.active');
-		else
+			maxSharesMoved = Math.min($src.data('amount'), game.MAX_INVEST_PER_CORP-$src.data('invested'));
+		} else {
 			$src = $('.dlg_corp_sharemanager .corpinvestors ul li.active');
-
+			maxSharesMoved = $src.data('amount')
+		}
+		
 		if($src.length == 0) return;
-		var amount = Math.min($src.data('amount'),$('.moveamount',dlg_game_corp_sharemanager).val());
+		var amount = Math.min(maxSharesMoved,$('.moveamount',dlg_game_corp_sharemanager).val());
 		if(amount < 0) amount = 0;
 		
 		if(!dlg_game_corp_sharemanager.changeset[$src.data('investor')])
@@ -519,6 +527,8 @@ $(function() {
 		}
 
 		$src.data('amount', $src.data('amount')-amount);
+		if(dlg_game_corp_sharemanager.managerType == 'add')
+			$src.data('invested', $src.data('invested')+amount);
 		if($src.data('amount') > 0)
 			$src.text($src.text().replace(/\(\d+\)$/,'('+$src.data('amount')+')'));
 		else
