@@ -373,7 +373,7 @@ io.on('connection', function(socket) {
 				recipients.add(socket.username);
 				for (var user of recipients) {
 					var player = WGDS.games[socket.gamename].players[user];
-					if (!player) continue;
+					if (!player || !player.socket) continue;
 					io.to(player.socket).emit('chat message', {
 						username: socket.username,
 						message: message
