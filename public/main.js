@@ -214,7 +214,6 @@ $(function() {
 		addMessage($('<li class="status">').text('Spieler \''+player+'\' hat das Spiel betreten.'));
 	});
 	socket.on('game playerquit', function(player) {
-		removeFromChatGroup(player);
 		addMessage($('<li class="status">').text('Spieler \''+player+'\' hat das Spiel verlassen.'));
 	});
 	socket.on('game status', function(status) {
@@ -268,12 +267,17 @@ $(function() {
 		if(game == null) game = newstate;
 		$.extend(game,newstate);
 		$('.game .players').empty();
-		resetChatGroupIfBroadcast();
+		if (privateChatGroup != null) {
+			privateChatGroup = privateChatGroup.filter(function(player) {
+				return player in game.players;
+			});
+			resetChatGroupIfBroadcast();
+		}
 		for(var player in game.players) {
 			var $player = $('<li>').text(player+' ('+game.players[player].sharesAvailable+'/'+game.players[player].shares+')')
 				.css({'background': game.players[player].color})
 				.data('player', player);
-			if (player == myUsername || !privateChatGroup || privateChatGroup.indexOf(player) >= 0)
+			if (player == myUsername || privateChatGroup == null || privateChatGroup.indexOf(player) >= 0)
 				$player.addClass('chat-group');
 			$player.appendTo($('.game .players'));
 		}
